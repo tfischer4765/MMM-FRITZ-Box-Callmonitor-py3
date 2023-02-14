@@ -7,7 +7,7 @@
  * MIT Licensed.
  */
 
-Module.register("MMM-FRITZ-Box-Callmonitor", {
+Module.register("MMM-FRITZ-Box-Callmonitor-py3", {
 
 	requiresVersion: "2.0.0",
 
