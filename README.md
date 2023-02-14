@@ -1,4 +1,4 @@
-# MMM-FRITZ-Box-Callmonitor
+# MMM-FRITZ-Box-Callmonitor-py3
 This an extension for the [MagicMirror](https://github.com/MichMich/MagicMirror). It provides a callmonitor for FRITZ!Box users alerting them about incoming calls.
 ![call](https://cloud.githubusercontent.com/assets/992826/14791014/3febe6b4-0b14-11e6-89d8-160a7c459835.png)
 
@@ -15,7 +15,7 @@ To use this module, add it to the modules array in the `config/config.js` file:
 ````javascript
 modules: [
 	{
-		module: 'MMM-FRITZ-Box-Callmonitor',
+		module: 'MMM-FRITZ-Box-Callmonitor-py3',
 		position: 'top_right',	// This can be any of the regions. Best results in left or right regions.
 		header: "Recent calls", // This is optional
 		config: {
