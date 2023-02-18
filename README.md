@@ -2,9 +2,11 @@
 This an extension for the [MagicMirror](https://github.com/MichMich/MagicMirror). It provides a callmonitor for FRITZ!Box users alerting them about incoming calls.
 ![call](https://cloud.githubusercontent.com/assets/992826/14791014/3febe6b4-0b14-11e6-89d8-160a7c459835.png)
 
+The original version has not been maintained for many years. Especially, it relied on python2. 
+This fork should work with python3 and the MagicMirror version 2.22.
 
 ## Installation
-1. Navigate into your MagicMirror's `modules` folder and execute `git clone https://github.com/paviro/MMM-FRITZ-Box-Callmonitor.git`. A new folder will appear navigate into it.
+1. Navigate into your MagicMirror's `modules` folder and execute `git clone https://github.com/drtorchwood/MMM-FRITZ-Box-Callmonitor-py3.git`. A new folder will appear navigate into it.
 2. Execute `npm install` to install the dependencies.
 3. (Optional) Execute `sudo apt-get install python-dev libxml2-dev libxslt1-dev zlib1g-dev && sudo pip install fritzconnection` to allow access to your FRITZ!Box phone book and recent calls. This can take a few minutes.
 4. Activate the callmonitor of your FRITZ!Box by calling `#96*5*` on a connected phone (Fritz Fon App won't work).

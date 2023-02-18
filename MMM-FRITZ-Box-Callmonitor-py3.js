@@ -50,7 +50,7 @@ Module.register("MMM-FRITZ-Box-Callmonitor-py3", {
 	},
 
 	getStyles: function() {
-		return ["font-awesome.css", "MMM-FRITZ-Box-Callmonitor.css"];
+		return ["font-awesome.css", "MMM-FRITZ-Box-Callmonitor-py3.css"];
 	},
 
 	start: function() {
