@@ -7,7 +7,7 @@
  * MIT Licensed.
  */
 
-Module.register("MMM-FRITZ-Box-Callmonitor", {
+Module.register("MMM-FRITZ-Box-Callmonitor-py3", {
 
 	requiresVersion: "2.0.0",
 
@@ -50,7 +50,7 @@ Module.register("MMM-FRITZ-Box-Callmonitor", {
 	},
 
 	getStyles: function() {
-		return ["font-awesome.css", "MMM-FRITZ-Box-Callmonitor.css"];
+		return ["font-awesome.css", "MMM-FRITZ-Box-Callmonitor-py3.css"];
 	},
 
 	start: function() {
