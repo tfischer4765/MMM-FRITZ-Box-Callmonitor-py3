@@ -28,27 +28,22 @@ module.exports = NodeHelper.create({
 		console.log("Starting module: " + this.name);
 	},
 
-	debugLog: function( message ) {
-		if(self.config.debug)
-			console.log( message );
-	},
-
 	normalizePhoneNumber(number) {
 		return phoneFormatter.normalize(number.replace(/\s/g, ""));
 	},
 
 	getName: function(number) {
-		self.debugLog("Looking for name to number "+number);
+		if(self.config.debug) console.log("Looking for name to number "+number);
 		//Normalize number
 		var number_formatted = this.normalizePhoneNumber(number);
 		//Check if number is in AdressBook if yes return the name
-		self.debugLog("Address book has "+this.AddressBook.length+" entries");
+		if(self.config.debug) console.log("Address book has "+this.AddressBook.length+" entries");
 		if (number_formatted in this.AddressBook) {
-			self.debugLog("Found entry "+this.AddressBook[number_formatted]);
+			if(self.config.debug) console.log("Found entry "+this.AddressBook[number_formatted]);
 			return this.AddressBook[number_formatted];
 		} else {
 			//Not in AdressBook return original number
-			self.debugLog("Did not find "+number_formatted+" in address book");
+			if(self.config.debug) console.log("Did not find "+number_formatted+" in address book");
 			return number;
 		}
 	},
@@ -92,20 +87,20 @@ module.exports = NodeHelper.create({
 		monitor.on("inbound", function(call) {
 			//If caller is not empty
 			if (call.caller != "") {
-				self.debugLog("Inbound call from "+call.caller);
+				if(self.config.debug) console.log("Inbound call from "+call.caller);
 				self.sendSocketNotification("call", self.getName(call.caller));
 			};
 		});
 
 		//Call accepted
 		monitor.on("connected", function(call) {
-			self.debugLog("Connected to "+call.caller);
+			if(self.config.debug) console.log("Connected to "+call.caller);
 			self.sendSocketNotification("connected", self.getName(call.caller));
 		});
 
 		//Caller disconnected
 		monitor.on("disconnected", function(call) {
-			self.debugLog("Disconnected from "+call.caller);
+			if(self.config.debug) console.log("Disconnected from "+call.caller);
 			//send clear command to interface
 			self.sendSocketNotification("disconnected", {"caller": self.getName(call.caller), "duration": call.duration});
 		});
@@ -151,7 +146,7 @@ module.exports = NodeHelper.create({
 			}
 			var callArray = result.root.Call;
 			var callHistory = []
-			self.debugLog("Loaded "+callArray.length+" calls");
+			if(self.config.debug) console.log("Loaded "+callArray.length+" calls");
 			for (var index in callArray)
 			{
 				var call = callArray[index];
@@ -169,7 +164,7 @@ module.exports = NodeHelper.create({
 					callHistory.push(callInfo)
 				}
 			}
-			self.debugLog("Call history now has "+callHistory.length+" entries");
+			if(self.config.debug) console.log("Call history now has "+callHistory.length+" entries");
 			self.sendSocketNotification("call_history", callHistory);
 		});
 	},
@@ -186,7 +181,7 @@ module.exports = NodeHelper.create({
 				return;
 			}
 			var contactsArray = result.phonebooks.phonebook[0].contact;
-			self.debugLog("Got "+contactsArray.length+" contacts to parse");
+			if(self.config.debug) console.log("Got "+contactsArray.length+" contacts to parse");
 			for (var index in contactsArray)
 			{
 				var contact = contactsArray[index];
