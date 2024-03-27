@@ -32,13 +32,13 @@ module.exports = NodeHelper.create({
 	},
 
 	getName: function(number) {
-		  console.log("Looking for name to number "+number);
+		 if(self?.config?.debug) console.log("Looking for name to number "+number);
 		//Normalize number
 		var number_formatted = this.normalizePhoneNumber(number);
 		//Check if number is in AdressBook if yes return the name
-		console.log("Address book has "+this.AddressBook.length+" entries "+typeof(this.AddressBook));
+		if(self?.config?.debug) console.log("Address book has "+Object.keys(this.AddressBook).length + " entries");
 		if (number_formatted in this.AddressBook) {
-			  console.log("Found entry "+this.AddressBook[number_formatted]);
+			if(self?.config?.debug)  console.log("Found entry "+this.AddressBook[number_formatted]);
 			return this.AddressBook[number_formatted];
 		} else {
 			//Not in AdressBook return original number
