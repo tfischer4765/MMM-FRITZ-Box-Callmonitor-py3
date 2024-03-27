@@ -23,8 +23,7 @@ module.exports = NodeHelper.create({
 		this.started = false;
 		//create adressbook dictionary
 		this.AddressBook = {};
-		if(config.debug)
-			console.log("Logging debug information");
+		console.log("Logging debug information");
 		console.log("Starting module: " + this.name);
 	},
 
@@ -33,17 +32,17 @@ module.exports = NodeHelper.create({
 	},
 
 	getName: function(number) {
-		if(self.config.debug) console.log("Looking for name to number "+number);
+		  console.log("Looking for name to number "+number);
 		//Normalize number
 		var number_formatted = this.normalizePhoneNumber(number);
 		//Check if number is in AdressBook if yes return the name
-		if(self.config.debug) console.log("Address book has "+this.AddressBook.length+" entries");
+		console.log("Address book has "+this.AddressBook.length+" entries");
 		if (number_formatted in this.AddressBook) {
-			if(self.config.debug) console.log("Found entry "+this.AddressBook[number_formatted]);
+			  console.log("Found entry "+this.AddressBook[number_formatted]);
 			return this.AddressBook[number_formatted];
 		} else {
 			//Not in AdressBook return original number
-			if(self.config.debug) console.log("Did not find "+number_formatted+" in address book");
+			  console.log("Did not find "+number_formatted+" in address book");
 			return number;
 		}
 	},
@@ -87,20 +86,20 @@ module.exports = NodeHelper.create({
 		monitor.on("inbound", function(call) {
 			//If caller is not empty
 			if (call.caller != "") {
-				if(self.config.debug) console.log("Inbound call from "+call.caller);
+				  console.log("Inbound call from "+call.caller);
 				self.sendSocketNotification("call", self.getName(call.caller));
 			};
 		});
 
 		//Call accepted
 		monitor.on("connected", function(call) {
-			if(self.config.debug) console.log("Connected to "+call.caller);
+			  console.log("Connected to "+call.caller);
 			self.sendSocketNotification("connected", self.getName(call.caller));
 		});
 
 		//Caller disconnected
 		monitor.on("disconnected", function(call) {
-			if(self.config.debug) console.log("Disconnected from "+call.caller);
+			  console.log("Disconnected from "+call.caller);
 			//send clear command to interface
 			self.sendSocketNotification("disconnected", {"caller": self.getName(call.caller), "duration": call.duration});
 		});
@@ -117,9 +116,9 @@ module.exports = NodeHelper.create({
 			//In case there is an error reading the vcard file
 			if (err) {
 				self.sendSocketNotification("error", "vcf_parse_error");
-				if (self.config.debug) {
-					console.log("[" + self.name + "] error while parsing vCard " + err);
-				}
+				
+				console.log("[" + self.name + "] error while parsing vCard " + err);
+				
 				return
 			}
 
@@ -146,7 +145,7 @@ module.exports = NodeHelper.create({
 			}
 			var callArray = result.root.Call;
 			var callHistory = []
-			if(self.config.debug) console.log("Loaded "+callArray.length+" calls");
+			  console.log("Loaded "+callArray.length+" calls");
 			for (var index in callArray)
 			{
 				var call = callArray[index];
@@ -164,7 +163,7 @@ module.exports = NodeHelper.create({
 					callHistory.push(callInfo)
 				}
 			}
-			if(self.config.debug) console.log("Call history now has "+callHistory.length+" entries");
+			  console.log("Call history now has "+callHistory.length+" entries");
 			self.sendSocketNotification("call_history", callHistory);
 		});
 	},
@@ -175,13 +174,13 @@ module.exports = NodeHelper.create({
 		xml2js.parseString(body, function (err, result) {
 			if (err) {
 				self.sendSocketNotification("error", "phonebook_parse_error");
-				if (self.config.debug) {
-					console.error(self.name + " error while parsing phonebook: " + err);
-				}
+				
+				console.error(self.name + " error while parsing phonebook: " + err);
+				
 				return;
 			}
 			var contactsArray = result.phonebooks.phonebook[0].contact;
-			if(self.config.debug) console.log("Got "+contactsArray.length+" contacts to parse");
+			  console.log("Got "+contactsArray.length+" contacts to parse");
 			for (var index in contactsArray)
 			{
 				var contact = contactsArray[index];
@@ -203,9 +202,9 @@ module.exports = NodeHelper.create({
 	loadDataFromAPI: function(additionalOption) {
 		var self = this;
 
-		if (self.config.debug) {
-			console.log('Starting access to FRITZ!Box...');
-		}
+		
+		console.log('Starting access to FRITZ!Box...');
+		
 
 		var args = ['-i', self.config.fritzIP, '-p', self.config.password];
 		if (self.config.username !== "")
@@ -255,15 +254,15 @@ module.exports = NodeHelper.create({
 				if (errorUnknown) {
 					self.sendSocketNotification("error", "unknown_error");
 				}
-				if (self.config.debug) {
-					console.error(self.name + " error while accessing FRITZ!Box: ");
-					console.error(error.traceback);
-				}
+				
+				console.error(self.name + " error while accessing FRITZ!Box: ");
+				console.error(error.traceback);
+				
 				return;
 			}
-			if (self.config.debug) {
-				console.log('Access to FRITZ!Box finished.');
-			}
+			
+			console.log('Access to FRITZ!Box finished.');
+			
 		});
 	}
 });
