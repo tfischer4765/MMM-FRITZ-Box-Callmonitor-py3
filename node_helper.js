@@ -24,7 +24,7 @@ module.exports = NodeHelper.create({
 		//create adressbook dictionary
 		this.AddressBook = {};
 		if(self.config.debug)
-			console.log("Logging debug information"
+			console.log("Logging debug information");
 		console.log("Starting module: " + this.name);
 	},
 
