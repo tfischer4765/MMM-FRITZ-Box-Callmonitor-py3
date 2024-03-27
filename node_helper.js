@@ -31,7 +31,7 @@ module.exports = NodeHelper.create({
 	debugLog: function( message ) {
 		if(self.config.debug)
 			console.log( message );
-	}
+	},
 
 	normalizePhoneNumber(number) {
 		return phoneFormatter.normalize(number.replace(/\s/g, ""));
