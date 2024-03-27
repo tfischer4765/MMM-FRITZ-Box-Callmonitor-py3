@@ -36,7 +36,7 @@ module.exports = NodeHelper.create({
 		//Normalize number
 		var number_formatted = this.normalizePhoneNumber(number);
 		//Check if number is in AdressBook if yes return the name
-		console.log("Address book has "+this.AddressBook.length+" entries");
+		console.log("Address book has "+this.AddressBook.length+" entries "+typeof(this.AddressBook));
 		if (number_formatted in this.AddressBook) {
 			  console.log("Found entry "+this.AddressBook[number_formatted]);
 			return this.AddressBook[number_formatted];
