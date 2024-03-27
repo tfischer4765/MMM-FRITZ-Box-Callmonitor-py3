@@ -145,7 +145,7 @@ module.exports = NodeHelper.create({
 			}
 			var callArray = result.root.Call;
 			var callHistory = [];
-			console.log("Loaded "+callArray.length+" calls "+typeof(callArray);
+			console.log("Loaded "+callArray.length+" calls "+typeof(callArray));
 			for (var index in callArray)
 			{
 				var call = callArray[index];
