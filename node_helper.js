@@ -38,17 +38,17 @@ module.exports = NodeHelper.create({
 	},
 
 	getName: function(number) {
-		debugLog("Looking for name to number "+number);
+		self.debugLog("Looking for name to number "+number);
 		//Normalize number
 		var number_formatted = this.normalizePhoneNumber(number);
 		//Check if number is in AdressBook if yes return the name
-		debugLog("Address book has "+this.AddressBook.length+" entries");
+		self.debugLog("Address book has "+this.AddressBook.length+" entries");
 		if (number_formatted in this.AddressBook) {
-			debugLog("Found entry "+this.AddressBook[number_formatted]);
+			self.debugLog("Found entry "+this.AddressBook[number_formatted]);
 			return this.AddressBook[number_formatted];
 		} else {
 			//Not in AdressBook return original number
-			debugLog("Did not find "+number_formatted+" in address book");
+			self.debugLog("Did not find "+number_formatted+" in address book");
 			return number;
 		}
 	},
@@ -92,20 +92,20 @@ module.exports = NodeHelper.create({
 		monitor.on("inbound", function(call) {
 			//If caller is not empty
 			if (call.caller != "") {
-				debugLog("Inbound call from "+call.caller);
+				self.debugLog("Inbound call from "+call.caller);
 				self.sendSocketNotification("call", self.getName(call.caller));
 			};
 		});
 
 		//Call accepted
 		monitor.on("connected", function(call) {
-			debugLog("Connected to "+call.caller);
+			self.debugLog("Connected to "+call.caller);
 			self.sendSocketNotification("connected", self.getName(call.caller));
 		});
 
 		//Caller disconnected
 		monitor.on("disconnected", function(call) {
-			debugLog("Disconnected from "+call.caller);
+			self.debugLog("Disconnected from "+call.caller);
 			//send clear command to interface
 			self.sendSocketNotification("disconnected", {"caller": self.getName(call.caller), "duration": call.duration});
 		});
@@ -151,7 +151,7 @@ module.exports = NodeHelper.create({
 			}
 			var callArray = result.root.Call;
 			var callHistory = []
-
+			self.debugLog("Loaded "+callArray.length+" calls");
 			for (var index in callArray)
 			{
 				var call = callArray[index];
@@ -169,6 +169,7 @@ module.exports = NodeHelper.create({
 					callHistory.push(callInfo)
 				}
 			}
+			self.debugLog("Call history now has "+callHistory.length+" entries");
 			self.sendSocketNotification("call_history", callHistory);
 		});
 	},
@@ -185,6 +186,7 @@ module.exports = NodeHelper.create({
 				return;
 			}
 			var contactsArray = result.phonebooks.phonebook[0].contact;
+			self.debugLog("Got "+contactsArray.length+" contacts to parse");
 			for (var index in contactsArray)
 			{
 				var contact = contactsArray[index];
